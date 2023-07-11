@@ -3,13 +3,68 @@ name = "myweb"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "myweb"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.6.4"
-tokio = { version ="1.25.0", features = ["full"] }
+axum = { version = "0.6.4", features = ["headers"] }
+hyper = { version = "0.14.26", features = ["tcp"] }
+tokio = { version = "1.25.0", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-sqlx = { version = "0.6.2", features = ["runtime-tokio-rustls", "any", "postgres"] }
+tracing = "0.1.37"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "registry"] }
+tracing-log = "0.1.3"
+tracing-bunyan-formatter = "0.3"
+tower-http = { version = "0.4.0", features = ["trace"] }
 tower = "0.4.13"
+chrono = "0.4.24"
+uuid = { version = "1", features = ["v4"] }
+config = { version = "0.13", default-features = false, features = ["yaml"] }
+secrecy = { version = "0.8", features = ["serde"]}
+tower-request-id = "0.2.1"
+serde-aux = "4.2"
+unicode-segmentation = "1"
+validator = "0.16"
+axum-macros = "0.3"
+rand = { version = "0.8.5", features = ["std_rng"] }
+tera = { version = "1", default-features = false }
+lazy_static = "1.4.0"
+thiserror = "1"
+serde_json = "1"
+anyhow = "1"
+base64 = "0.21"
+argon2 = { version = "0.5", features = ["std"] }
+urlencoding = "2"
+htmlescape = "0.3"
+axum-extra = { version = "0.7", features = ["cookie"] }
+
+[dependencies.sqlx]
+version = "0.7.0"
+features = [
+    "runtime-tokio-rustls",
+    "any",
+    "postgres",
+    "uuid",
+    "chrono",
+    "migrate",
+    "macros",
+]
+
+[dependencies.reqwest]
+version = "0.11"
+default-features = false
+features = ["json", "rustls-tls", "cookies"]
+
+[dev-dependencies]
+linkify = "0.10"
+claims = "0.7"
+once_cell = "1"
+fake = "2.6"
+quickcheck = "1.0.3"
+quickcheck_macros = "1.0.0"
+wiremock = "0.5.19"
